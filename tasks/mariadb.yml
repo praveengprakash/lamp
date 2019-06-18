@@ -1,0 +1,49 @@
+---
+- name: "MariaDB- Installation"
+  yum:
+    name:
+      - mariadb-server
+      - MySQL-python
+
+    state: present
+  notify: restart-mariadb
+
+- name: "MariaDB- Flush Handler"
+  meta: flush_handlers
+
+- name: "MariaDB- Updating Root Password"
+  ignore_errors: yes
+  mysql_user:
+    login_user: root
+    login_password: ''
+    name: root
+    host_all: yes
+    password: "{{ mysql_root }}"
+
+
+
+- name: "MariaDB- Deleting Anonymous Users"
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root }}"
+    name: ''
+    host_all: yes
+    state: absent
+ 
+
+- name: "MariaDB- Creating WordPress Database"
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root }}"
+    db: "{{ mysql_database }}"
+    state: present
+
+
+- name: "MariaDB- Creating WordPress User"
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root }}"
+    name: "{{ mysql_user }}"
+    host: localhost
+    password: "{{ mysql_password }}"
+    priv: "{{mysql_database}}.*:ALL"

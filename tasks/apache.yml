@@ -1,0 +1,32 @@
+---
+- name: "httpd- Installation"
+  yum:
+    name:
+      - httpd
+    state: present
+  notify: restart-httpd
+
+- name: "httpd- Creating Virtual Host"
+  template:
+    src: virtualhost.j2
+    dest: "/etc/httpd/conf.d/{{domain}}.conf"
+  notify: restart-httpd
+
+- name: "httpd- Creating Document Root"
+  file:
+    path: /var/www/html/{{domain}}
+    state: directory
+    owner: apache
+    group: apache
+
+- name: "httpd- Creating info pages"
+  copy:
+    src: "{{item}}"
+    dest: /var/www/html/{{domain}}
+  with_items:
+    - index.html
+    - index.php
+
+- name: "httpd- Flush handlers"
+  meta: flush_handlers
+

@@ -1,0 +1,3 @@
+---
+- name: "Final service Restarting"
+  meta: flush_handlers

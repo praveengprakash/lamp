@@ -1,0 +1,13 @@
+---
+- name: "php- Installation"
+  yum:
+    name: 
+      - php
+      - php-mysql
+      - php-gd
+    state: present
+  notify: restart-httpd
+
+- name: "php- Flush Handler"
+  meta: flush_handlers
+

@@ -1,0 +1,7 @@
+---
+# vars file for lamp
+mysql_root: mysqlroot123
+mysql_user: mysqluser123
+mysql_password: mysqlpassword
+mysql_database: mysqldb
+domain: www.praveen.com
