@@ -20,7 +20,7 @@ This role can be used to install a fully featured LAMP stack on Amazon Linux. Ti
 #### How to change DB settings
 
 ```sh
-$ cat /etc/ansible/path-to
+$ cat var/main.yml
 ---
 mysql_root: mysqlroot123
 mysql_user: mysqluser123
